@@ -1,9 +1,11 @@
 import express from 'express'
-import {createPost} from '../controllers/post.controller.js';
+import {createPost, deletePost, getAllPosts, getSinglePost} from '../controllers/post.controller.js';
 const router = express.Router();
 
 
-router.get("/createpost", createPost
-);
+router.post("/createpost", createPost);
+router.get("/getallpost", getAllPosts);
+router.get("/getsinglepost", getSinglePost)
+router.delete("deletepost", deletePost)
 
 export default router;
