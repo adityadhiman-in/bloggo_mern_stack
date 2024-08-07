@@ -1,14 +1,19 @@
 //Imports
 import express from 'express';
-import PostRoute from './routes/post.route.js';
+import PostRoute from './routes/routes.js';
 import connectWithMongoose from './db/connection1.db.js';
-import dotenv from 'dotenv'
+import cors from 'cors';
+import dotenv from 'dotenv';
+
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 connectWithMongoose();
+app.use(cors({
+    origin: ["http://localhost:3000"]
+}));
 
 //Middlewares
 app.use(express.json())

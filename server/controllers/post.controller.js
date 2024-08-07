@@ -35,5 +35,20 @@ const deletePost = async (req, res )=>{
         responseData
     })
 }
+const updatePost = async (req, res )=>{
+    const {postID} = req.body;
+    const {topic, question, answer} = req.body;
+    const responseData = await PostSchema.findByIdAndUpdate(postID,{
+        topic,
+        question,
+        answer
+    },{new:true});
+    res.send({
+        success: true,
+        responseData
+    })
+}
 
-export { createPost, getAllPosts, getSinglePost, deletePost}
+export { createPost, getAllPosts, getSinglePost, deletePost, updatePost}
+
+
