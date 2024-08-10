@@ -1,32 +1,75 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './CreatePost.css';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const CreatePost = () => {
-  const [title, setTitle] = useState('');
+  const [topic, setTopic] = useState('');
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
+  const navigate = useNavigate();
+  const { postID } = useParams();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log('Title:', title);
-    console.log('Question:', question);
-    console.log('Answer:', answer);
-    setTitle('');
-    setQuestion('');
-    setAnswer('');
+  const getPosts = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/getsinglepost?postID=${postID}`);
+      const post = response.data.responseData;
+      setTopic(post?.topic || '');
+      setQuestion(post?.question || '');
+      setAnswer(post?.answer || '');
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    if (postID) {
+      getPosts();
+    }
+  }, [postID]); // Add postID as a dependency
+
+  const handleSubmit = async (event) => {
+    event.preventDefault(); 
+
+    try {
+      if(postID){
+        const response = await axios.put("http://localhost:3000/updatepost", {
+          postID,
+          topic,
+          question,
+          answer
+        });
+      if (response.data.responseData) {
+        navigate(`/singlepost/${postID}`)
+      }
+    }
+      else{
+      const response = await axios.post("http://localhost:3000/createpost", {
+        topic,
+        question,
+        answer
+      });
+      
+      if (response.data.responseData) {
+        navigate('/'); // Redirect to the main page
+      }
+    }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className="create-post">
-      <h1>Create a New Post</h1>
+      <h1>{postID ? 'Update the Post' : 'Create a new Post'}</h1>
       <form onSubmit={handleSubmit} className="create-post-form">
         <div className="form-group">
-          <label htmlFor="title">Title:</label>
+          <label htmlFor="title">Topic:</label>
           <input
             type="text"
             id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={topic}
+            onChange={(e) => setTopic(e.target.value)}
             required
           />
         </div>
@@ -48,7 +91,7 @@ const CreatePost = () => {
             required
           ></textarea>
         </div>
-        <button type="submit" className="submit-button">Submit</button>
+        <button type="submit" className="submit-button">{postID ? 'Update Post' : 'Submit Post'}</button>
       </form>
     </div>
   );

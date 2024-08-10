@@ -1,0 +1,38 @@
+.singlePost {
+    padding: 70px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+}
+.singlePost h1{
+    font-size: 36px;
+    color: #030303;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+.singlePost h2{
+    font-size: 24px;
+    color: #030303;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+.singlePost p{
+    font-size: 18px;
+    color: #3b3b3b;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+.singlePost .btns{
+    display: inline-flex;
+    gap: 1rem;
+}
+.btns button{
+    background-color: #080808;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}

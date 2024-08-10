@@ -1,13 +1,16 @@
 import React from 'react';
 import './Card.css';
+import { useNavigate } from 'react-router-dom';
 
-const Card = ({ title, question, answer }) => {
+const Card = ({post}) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="card">
+    <div onClick={()=> navigate(`/singlepost/${post?._id}`)} className="card">
       <div className="card-content">
-        <h2>{title}</h2>
-        <h3>{question}</h3>
-        <p>{answer}</p>
+        <h2>{post.topic}</h2>
+        <h3>{post.question}</h3>
+        <p>{post.answer}</p>
       </div>
     </div>
   );
