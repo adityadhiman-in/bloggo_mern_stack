@@ -1,5 +1,7 @@
 # Online Blogging Platform
 
+![Preview](image.png)
+
 ## Overview
 
 This is an online blogging platform that allows users to perform CRUD (Create, Read, Update, Delete) operations on blog posts. The platform features a robust user interface for writing, editing, viewing, and deleting posts.
